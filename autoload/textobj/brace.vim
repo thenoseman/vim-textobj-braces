@@ -1,18 +1,15 @@
 function! s:select(object_type)
-  call search('[\|(\|{\|<', 'bce')
-  let start_position = getpos('.')
+    call search('[\|(\|{\|<', 'bce')
+    let start_position = getpos('.')
+    normal! %
+    let end_position = getpos('.')
 
-  normal! %
-  let end_position = getpos('.')
-  let end_position[2] = 1000
-  let start_position[2] = 0
+    if a:object_type ==? 'i'
+        let start_position[2] += 1
+        let end_position[2] -= 1
+    endif
 
-  if a:object_type ==? 'i'
-    let start_position[1] += 1
-    let end_position[1] -= 1
-  endif
-
-  return ['v', start_position, end_position]
+    return ['v', start_position, end_position]
 endfunction
 
 function! s:select_a()
